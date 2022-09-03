@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:first_game/core/base.dart';
 import 'package:first_game/level.dart';
 import 'package:first_game/score.dart';
 import 'package:first_game/timer.dart';
@@ -5,33 +8,51 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vibration/vibration.dart'; // check ios
 
+import 'finish_view.dart';
 import 'visibilities.dart';
 
 class MyGame extends StatefulWidget {
-  const MyGame({Key? key}) : super(key: key);
-
+  static String routeName = "/game";
+  double second;
+  MyGame(this.second, {super.key}) {}
   @override
-  State<MyGame> createState() => _MyGameState();
+  State<MyGame> createState() => MyGameState();
 }
 
-class _MyGameState extends State<MyGame> {
-  var alert = AlertDialog(
-    title: Text("Game Over"),
-  );
-  //showDialog(context: context, builder: (BuildContext context) => alert); //you have to use this.
+class MyGameState extends State<MyGame> with Base {
   final timer time = Get.put(timer());
-  final Score score = Get.put(Score());
-  LevelIncrease level = LevelIncrease();
+  final Score newScore = Score();
+  Level level = Level();
   Visibilities visibleController = Visibilities();
+
   // AudioPlayer player = AudioPlayer();
-  List<int> text = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  //List<int> text = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   int highestPoint = 0;
   int a = 0;
   int visible = 0;
 
+  void timeChecker() {
+    Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      if (time.second <= 0.0) {
+        timer.cancel();
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => FinishScreen(newScore.score)));
+        time.timerr.cancel();
+        time.second = 5;
+        //level.level = 1;
+        time.num = 0;
+        time.decreaseSecond = 0;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    visibleController.isVisible();
+    if (newScore.score == 0) {
+      visibleController.isVisible();
+    }
+    timeChecker();
     time.countDown();
 
     return MaterialApp(
@@ -44,14 +65,10 @@ class _MyGameState extends State<MyGame> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 Expanded(flex: 2, child: scoreGetBuilder()),
-                Expanded(
-                  flex: 2,
-                  child: leftTime(),
-                ),
-                //Text("Score $point"),
-                Text("Level: ${level.level}"),
+                Expanded(flex: 2, child: leftTime()),
+                levelText(),
                 Expanded(
                   flex: 3,
                   child: firstRow(),
@@ -72,26 +89,32 @@ class _MyGameState extends State<MyGame> {
     );
   }
 
+  Text levelText() => Text(
+        "$levels: ${level.level}",
+        style: const TextStyle(fontSize: 16),
+      );
+
   AppBar buildAppBar() {
     return AppBar(
       centerTitle: true,
-      title: const Text("U Can't Touch"),
+      title: Text(gameName),
     );
   }
 
   //this method get score from score file with getx
-  GetBuilder<Score> scoreGetBuilder() {
-    return GetBuilder<Score>(
-        builder: (builder) =>
-            Text("Score: ${score.score.toStringAsPrecision(6)}"));
+  Text scoreGetBuilder() {
+    return Text(
+      "$scores: ${newScore.score.toPrecision(3)}",
+      style: const TextStyle(fontSize: 18),
+    );
   }
 
   //This method get time as millisecond from timer file with getx
   GetBuilder<timer> leftTime() {
     return GetBuilder<timer>(
       builder: (builder) => Text(
-        "Time Left: ${time.second.toPrecision(2)} s",
-        style: const TextStyle(fontSize: 20),
+        "$timeLeft: ${time.second.toPrecision(3)} s",
+        style: const TextStyle(fontSize: 25),
       ),
     );
   }
@@ -140,11 +163,10 @@ class _MyGameState extends State<MyGame> {
         padding: const EdgeInsets.all(0),
         splashColor: spcolor,
         onPressed: () {
-          score.addScore();
+          newScore.addScore();
           time.reset();
+          visibleController.isVisible();
           setState(() {
-            Dialog;
-            visibleController.isVisible();
             Vibration.vibrate(duration: 50);
             level.increaseLevel();
 
@@ -152,14 +174,28 @@ class _MyGameState extends State<MyGame> {
           });
         },
         child: Container(
-          color: ctcolor,
           height: 95,
           width: 95,
-          child: Center(
-            child: Text(
-              "${level.num + 1}",
-              style: const TextStyle(fontSize: 20),
-            ),
+          decoration: BoxDecoration(
+            color: ctcolor,
+            boxShadow: [
+              BoxShadow(
+                color: colorConstant.colorDark,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+              ), //BoxShadow
+              BoxShadow(
+                color: colorConstant.colorWhite,
+                offset: const Offset(0.0, 0.0),
+                blurRadius: 0.0,
+                spreadRadius: 0.0,
+              ), //BoxShadow
+            ],
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),

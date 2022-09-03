@@ -7,4 +7,6 @@ class IconConstant {
   final startIcon = Icon(Icons.play_arrow);
   final settingIcon = Icon(Icons.settings);
   final closeIcon = Icon(Icons.close);
+  final restartIcon = Icon(Icons.restart_alt_rounded);
+  final menuIcon = Icon(Icons.menu);
 }

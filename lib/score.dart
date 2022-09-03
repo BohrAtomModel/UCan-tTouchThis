@@ -1,11 +1,15 @@
+import 'package:first_game/core/base.dart';
 import 'package:first_game/timer.dart';
 import 'package:get/get.dart';
 
-class Score extends GetxController {
+class Score with Base {
   final timer time = Get.put(timer());
-  RxDouble score = 0.0.obs;
 
   void addScore() {
-    score = (score + (25 * time.getSecond())) as RxDouble;
+    score = (score + (25 * time.getSecond()));
+  }
+
+  double getScore() {
+    return score;
   }
 }

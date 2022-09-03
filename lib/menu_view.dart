@@ -1,12 +1,12 @@
 import 'package:first_game/constants/colors_constants.dart';
-import 'package:first_game/settings_view.dart';
+import 'package:first_game/core/base.dart';
 import 'package:flutter/material.dart';
 
-import 'constants/icon_constants.dart';
 import 'game_view.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class Menu extends StatelessWidget with Base {
+  static String routeName = "/menu";
+  //const Menu({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +14,7 @@ class Menu extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("Menu"),
+          title: Text(menu),
         ),
         body: SafeArea(
           child: Center(
@@ -22,56 +22,62 @@ class Menu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
+                  flex: 3,
                   child: Container(
                     color: Colors.transparent,
-                    child: const Center(child: Text("Game Name")),
+                    child: Center(
+                        child: Text(gameName,
+                            style: Theme.of(context).textTheme.headline3)),
                   ),
                 ),
                 Expanded(
                   child: Center(
                     child: Container(
-                      width: 200,
-                      color: ColorConstant.instance.colorDark,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorConstant.instance.colorDark,
+                      ),
+                      //color:
                       child: IconButton(
-                        icon: IconConstant.instance.startIcon,
+                        icon: iconConstant.startIcon,
+                        //splashColor: colorConstant.colorTrans,
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyGame()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyGame(5)));
                         },
                       ),
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
                 Expanded(
                   child: Container(
-                    width: 200,
-                    color: ColorConstant.instance.colorDark,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorConstant.instance.colorDark,
+                    ),
                     child: IconButton(
-                      icon: const Icon(Icons.settings),
+                      icon: iconConstant.settingIcon,
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        Navigator.pushNamed(context, "/setting");
                       },
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
                 Expanded(
                   child: Container(
-                    width: 200,
-                    color: ColorConstant.instance.colorDark,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorConstant.instance.colorDark,
+                    ),
                     child: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {},
+                      icon: iconConstant.closeIcon,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
               ],
             ),
           ),

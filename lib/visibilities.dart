@@ -2,6 +2,7 @@ import 'dart:math';
 
 class Visibilities {
   //beginning of the game all of containers are invisible then randomly int value chooses a container to become visible
+  int temp = 0;
   int random = 0;
   bool visible1 = false;
   bool visible2 = false;
@@ -16,6 +17,11 @@ class Visibilities {
   isVisible() {
     // I didn't find another way without use if else
     random = Random().nextInt(9) + 1;
+    while (temp == random) {
+      random = Random().nextInt(9) + 1;
+    }
+    temp = random;
+    //numbers.remove(random);
     if (random == 1) {
       visible1 = true;
       visible2 = false;

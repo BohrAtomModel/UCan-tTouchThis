@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
+  static String routeName = "/settings";
   const Settings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,

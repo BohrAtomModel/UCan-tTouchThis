@@ -1,19 +1,25 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:first_game/core/base.dart';
 import 'package:get/get.dart';
 
-class timer extends GetxController {
-  var second = 4.500;
-  late Timer _timer;
+import 'level.dart';
+
+class timer extends GetxController with Base {
+  Level level = Level();
+  late Timer timerr;
+  var num = 0;
+  var decreaseSecond = 0;
 
   double getSecond() {
     return second;
   }
 
   void countDown() {
-    _timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
-      if (second > 0) {
-        second = second - (0.001666667);
+    timerr = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+      if (second > 0.0) {
+        second = second - (0.001);
         update();
       } else {
         timer.cancel();
@@ -23,7 +29,12 @@ class timer extends GetxController {
 
   // I want to add a alert dialog end of the time but I couldn't add
   void reset() {
-    _timer.cancel();
-    second = 4.5;
+    num++;
+    num = num % 10;
+    if (num == 0) {
+      decreaseSecond++;
+    }
+    timerr.cancel();
+    second = 5.0 * (pow(0.85, decreaseSecond));
   }
 }

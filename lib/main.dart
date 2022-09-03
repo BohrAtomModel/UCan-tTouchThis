@@ -1,25 +1,28 @@
+import 'package:first_game/core/base.dart';
+import 'package:first_game/finish_view.dart';
+import 'package:first_game/game_view.dart';
 import 'package:first_game/menu_view.dart';
 import 'package:first_game/settings_view.dart';
 import 'package:flutter/material.dart';
 
-import 'game_view.dart';
-
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget with Base {
+  // const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "MaterialApp",
       initialRoute: "/menu",
       routes: {
-        "/menu": (context) => const Menu(),
-        "/game": (context) => const MyGame(),
-        "/setting": (context) => const Settings()
+        Menu.routeName: (context) => Menu(),
+        MyGame.routeName: (context) => MyGame(second),
+        Settings.routeName: (context) => Settings(),
+        FinishScreen.routeName: (context) => FinishScreen(score),
       },
     );
   }
