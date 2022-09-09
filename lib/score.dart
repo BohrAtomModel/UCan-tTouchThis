@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 class Score with Base {
   final timer time = Get.put(timer());
-
   void addScore() {
     score = (score + (25 * time.getSecond()));
   }

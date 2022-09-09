@@ -9,4 +9,5 @@ class IconConstant {
   final closeIcon = Icon(Icons.close);
   final restartIcon = Icon(Icons.restart_alt_rounded);
   final menuIcon = Icon(Icons.menu);
+  final worldIcon = Icon(Icons.add_chart);
 }

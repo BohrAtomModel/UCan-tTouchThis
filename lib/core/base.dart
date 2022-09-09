@@ -6,7 +6,6 @@ abstract class Base {
   IconConstant iconConstant = IconConstant.instance;
   double second = 5;
   double score = 0.0;
-
   //Menu string const
   String menu = "Menu";
   String gameName = "U Can't Touch";

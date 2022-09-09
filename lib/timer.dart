@@ -17,7 +17,7 @@ class timer extends GetxController with Base {
   }
 
   void countDown() {
-    timerr = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    timerr = Timer.periodic(Duration(milliseconds: 1), (timer) {
       if (second > 0.0) {
         second = second - (0.001);
         update();

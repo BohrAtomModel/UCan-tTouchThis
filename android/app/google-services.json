@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71892714030",
+    "project_id": "fir-game-e50ab",
+    "storage_bucket": "fir-game-e50ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71892714030:android:d927a5420e2ad88a9cd5bf",
+        "android_client_info": {
+          "package_name": "com.example.first_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71892714030-ipdf15ngcar1f3cunv47f95nu35j76aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnn79nK6oRNCFZaoEihzdKgwup-n56Wx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71892714030-ipdf15ngcar1f3cunv47f95nu35j76aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
